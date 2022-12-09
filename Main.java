@@ -22,16 +22,35 @@ public class Main {
             // "Nouveau dossier"
             Connect bdd=new Connect(co,nm);
             // bdd.requete("Soraty anaty table ny hoe :Rajaonasitera,Tatiana,Antananarivo");
+            // bdd.requete("Soraty anaty table ny hoe","Rakotonirina","Jerrick","Antananarivo");
             // bdd.requete("Alaivo daholo ny anaty table",null);
             // bdd.requete("Fafao any ny","hgdjhwgfgew");
             
             
-            // bdd.requete(sql);
-            String sql="";
+            // bdd.requete("write in table : n,p,v");
+            // bdd.requete("get all in table join t on Nom = Nom");
+            // bdd.requete("get Nom in table");
+            // bdd.requete("get Nom in table where Nom = Raj");
+            // bdd.requete("get all in table where Nom = Raj");
+            // bdd.requete("get all in tabl");
+            // bdd.requete("get table union tabl");
+            // bdd.requete("get table divise ta");
+            // bdd.requete("get table fois tabl");
+            // bdd.requete("get table inter tabl");
+            // Table tr=bdd.requete("get");
+            // System.out.println(tr);
+
+            // String sql="";
             Table t=bdd.prendre("Nouveau dossier/table");
-            // t.affichage();
+            // // t.affichage();
+            // System.out.println("b");
             Table tt= bdd.prendre("Nouveau dossier/tabl");
-            // tt.affichageByLine();
+            // // tt.affichageByLine();
+            // Table ttt=bdd.prendre("Nouveau dossier/ta");
+            
+            // Table tttt=bdd.prendre("Nouveau dossier/t");
+            // Table join=t.join(tttt, "Nom", "Nom");
+            // join.affichageByLine();
             // String[] colonne=new String[2];
             // colonne[0]="Nom";
             // colonne[1]="Ville";
@@ -41,9 +60,13 @@ public class Main {
             // ta.affichageByLine();
             // Table m=tt.difference(t);
             // m.affichageByLine();
-            Table i=t.intersection(tt);
-            i.affichageByLine();
-            
+            // Table i=t.intersection(tt);
+            // i.affichageByLine();
+            // Table di=t.division(ttt);
+            // di.affichageByLine();
+            // Table p=t.produit(tt);
+            // p.affichageByLine();
+            // p.affichage();
             // t.affichage();
             // Table sel=t.selection("Nom", "Rajao");
             // sel.affichage();
@@ -70,7 +93,7 @@ public class Main {
             // }
             // dossier.mkdir();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
             // TODO: handle exception`
         }
         

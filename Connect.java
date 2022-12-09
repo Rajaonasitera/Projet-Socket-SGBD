@@ -1,5 +1,8 @@
 package connect;
 import java.util.Vector;
+
+import javafx.scene.control.TableCell;
+
 import java.lang.Exception;
 import java.util.*;
 import java.io.*;
@@ -117,41 +120,60 @@ public class Connect {
                     }
                     table.setData(valiny);
 
-                    // System.out.println(table.getLength());
-                    // Vector<String[]> you=new Vector<>();
-                    // String[][] yu=new String[table.getDataLength()][];
-                    // for (int i = 0; i < table.getDataLength(); i++) {
-                    //     yu[i]=new String[table.getLength()];
-                    // }
-                    // for (int i = 0; i < table.getDataLength(); i++) {
-                    //     for (int j = 0; j < table.getLength(); j++) {
-                    //         yu[i][j]=table.getData()[j][i];
-                    //         // System.out.println(yu[i][j]);
-                    //     }
-                    // }
-                    // for (int i = 0; i < yu.length; i++) {
-                    //     you.add(yu[i]);
-                    // }
-                    // System.out.println(you.size());
                     table.setDataByLine(table.turnToLine());
-                    // for (int i = 0; i < table.getDataLength(); i++) {
-                    //     System.out.println(yu[i][0]);
-                    // }
+
                     return table;
                 } catch (Exception e) {
-                    System.out.println(e);
-                    // throw new Exception("CETTE TABLE N'EXISTE PAS");
+                    // System.out.println(e);
+                    throw new Exception("CETTE TABLE N'EXISTE PAS");
                     // TODO: handle exception
                 }
             } else {
-                System.out.println("CETTE TABLE N'EXISTE PAS");
-                return null;
+                throw new Exception("CETTE TABLE N'EXISTE PAS");
+                // System.out.println("CETTE TABLE N'EXISTE PAS");
+                // return null;
             }
-            return null;
+            // return null;
         
         
     }
+//------------------------------------------------------------------------------------------------------------------
 
+
+    public void createdataB(String nom)throws Exception{
+        if (co==true) {
+            Boolean n=false;
+            File file=new File(nom);
+            if (file.exists()==false) {
+                n=file.mkdir();
+                throw new Exception(String.valueOf(n));
+            } else {
+                throw new Exception("DATABASE EXISTANT");
+            }    
+        }else{
+
+
+            throw new Exception("ERREUR DE CONNECTION");
+        }
+        
+    }
+
+//------------------------------------------------------------------------------------------------------------------
+
+
+    public void createT(String nom)throws Exception{
+        if (co==true) {
+            File file=new File(this.nom +"/"+ nom+".bdd");
+            if (file.exists()==false) {
+                file.createNewFile();
+            } else {
+                throw new Exception("TABLE EXISTANT");
+            }    
+        } else {
+            
+            throw new Exception("ERREUR DE CONNECTION");
+        }
+    }
 //------------------------------------------------------------------------------------------------------------------
 
     public void delete(String condition)throws Exception{
@@ -172,124 +194,240 @@ public class Connect {
         ecrire.close();
 
     }
+
 //------------------------------------------------------------------------------------------------------------------
 
-    // public void create(String quoi,String nom){
-    //         if (quoi.equals("Database")) {
-    //             File f=new File(nom);
-    //             f.mkdir();
-    //         }
-    //     } else {
-            
-    //     }
-    // }
-//------------------------------------------------------------------------------------------------------------------
-
-    public void requete(String sql)throws Exception{
-        if (getCo()==true) {
-            if (sql.length()<24) {
-                // throw new Exception("Misy diso tompoko ny requete nao");
-                System.out.println("MISY DISO TOMPOKO NY REQUETE NAO");
-            }
-            String sql1=sql.substring(0,12);
-            String sql2=sql.substring(0,22);
-            // String sql0=sql.substring(0,6);
-            // System.out.println(sql0);
-
-            if(sql1.equals("Soraty anaty")){
-                String[] sql3=sql.substring(13).split(" ");
-                String sql5=sql3[1]+" "+sql3[2]+" "+sql3[3].charAt(0);
-                // System.out.println(sql5);
-                String nomT=this.nom+"/"+sql3[0];
-
-                if (sql5.equals("ny hoe :")) {
-                        String[] table=sql.substring(27).split(",");
-                        if (table.length!=3) {
-                            // throw new Exception("Tsy ampy ilay data");
-                            System.out.println("TSY AMPY ILAY DATA");
-                        }
-                    for (int i = 0; i < table.length; i++) {
-                        ecrire(table[i],nomT);
-                    }
-                }else if(sql5.equals("ny hoe :")==false){
-                    // throw new Exception("Misy diso tompoko ny requete nao");
-                    System.out.println("MISY DISO TOMPOKO NY REQUETE NAO");
-                }
-            }
-            // String[] sql6=sql.substring(8).split(" ");
-            // if(sql0.equals("Alaivo")&&sql6[2].equals(txt)){
-            //     String nomT=this.nom+"/"+sql.substring(23);
-            //     String[] txt=prendre(nomT);
-
-            //     if (sql6[0].equals("daholo")) {
-            //         System.out.println(txt[1]+"           "+txt[2]+"        "+txt[3]+"\n");
-            //         for (int i = 4; i < txt.length; i+=3) {
-            //             System.out.println(txt[i]+" "+txt[i+1]+" "+txt[i+2]+"\n");
-            //         }
-            //     } else {
-            //         int ind=0;
-            //         for (int i = 1; i < Integer.parseInt(txt[0]); i++) {
-            //             if (txt[i].equals(sql6[0])) {
-            //                 ind=i;
-            //             }
-            //         }
-            //         System.out.println(txt[ind]);
-            //         for (int i = Integer.parseInt(txt[0])+1; i < txt.length; i+=3) {
-            //             System.out.println(txt[i]"\n");
-            //         }
-            //     }
-                
-                
-            // }
-
-
-            if(sql2.equals("Alaivo daholo ny anaty")){
-                String nomT=this.nom+"/"+sql.substring(23);
-                Table txt=prendre(nomT);
-                txt.affichage();
-                // String[] tableau=new String[txt.getDataLength()+1];
-                // System.out.println(txt[1]+"           "+txt[2]+"        "+txt[3]+"\n");
-                // for (int i = 4; i < txt.length; i+=3) {
-                //     System.out.println(txt[i]+" "+txt[i+1]+" "+txt[i+2]+"\n");
-                // }
-            }
-
-
-            // if(sql.equals("Fafao any ny")){
-            //     delete(text);
-            // }
-            else if(sql2.equals("Alaivo daholo ny anaty")==false&&sql1.equals("Soraty anaty")==false){
-                // throw new Exception("Misy diso tompoko ny requete nao");
-                System.out.println("MISY DISO TOMPOKO NY REQUETE NAO");
-            }
-        }else{
+    public void deleteFile(String nom)throws Exception{
+        if (co==true) {
+            File file=new File(this.nom +"/"+ nom+".bdd");
+            if (file.exists()) {
+                file.delete();
+            } else {
+                throw new Exception("CETTE TABLE N'EXISTE PAS");
+            }    
+        } else {
             throw new Exception("ERREUR DE CONNECTION");
         }
     }
-    
 //------------------------------------------------------------------------------------------------------------------
 
-// public void requete(String sql)throws Exception{
-//     String sqls=sql.substring(0,22);
-//     System.out.println(sqls);
-//     if (getCo()==true) {
-//         if(sqls.equals("Alaivo daholo ny anaty")){
-//             String[] txt=prendre();
-//             // for (int i = 0; i < txt.length; i++) {
-//             //     if () {
+//------------------------------------------------------------------------------------------------------------------
+
+    public Table requete(String sql)throws Exception{
+        if (getCo()==true) {
+            if (sql.split(" ")[0].equals("delete")) {
+                deleteFile(sql.split(" ")[1]);
+                throw new Exception("OK");
+            }
+            String sql1=sql.substring(0, 9);
+            String sql4=sql.substring(0,4);
+
+            // get all in table
+            // get all in table where Nom = Raj
+            // get all in table join tab on Nom = Nom
+            // get Nom in table
+            // get Nom in table where Nom = Raj
+            // get table union tab
+            // get table divise tab
+            // get table fois tab
+            // get table diff tab
+            // get table inter tab
+            // write in table : bla,bla,bla
+            // new database Base
+            // new table table : Nom,Prenom,Age
+            // deconnect
+            // write in table : bla,bla,bla
+            // delete g
+
+            
+            
+            if(sql.equals("deconnect")){
+                deconnect();
+                throw new Exception("DISCONNECTED");
+            }
+
+            if (sql.split(" ")[0].equals("new")&&sql.split(" ").length==3) {
+                if (sql.split(" ")[1].equals("database")) {
+                    createdataB(sql.split(" ")[2]);
+                    throw new Exception("OK");
+                }else{
+                    throw new Exception("SQL ERREUR");
+                }
+            }
+
+            if (sql.split(" ")[0].equals("new")&&sql.split(" ").length==5) {
+                if (sql.split(" ")[1].equals("table")) {
+                    String[] sql9=sql.split(" ")[4].split(",");
+                        createT(sql.split(" ")[2]);
+                        ecrire(String.valueOf(sql9.length),this.nom+"/"+sql.split(" ")[2]);
+                    for (int i = 0; i < sql9.length; i++) {
+                        ecrire(sql9[i],this.nom+"/"+sql.split(" ")[2]);
+                    }
+                    throw new Exception("OK");
                     
-//             //     }
-//             // }
-//             System.out.println(txt[0]+"           "+txt[1]+"        "+txt[2]+"\n");
-//             for (int i = 3; i < txt.length; i+=3) {
-//                 System.out.println(txt[i]+" "+txt[i+1]+" "+txt[i+2]+"\n");
-//             }
-//         }
-//         else if(sql.equals("Alaivo daholo ny anaty table")==false&&sql.equals("Soraty anaty table ny hoe")==false){
-//             throw new Exception("Misy diso tompoko ny requete nao");
-//         }
-//     }else{
-//         throw new Exception("Erreur de connection");
-//     }
-// }
+                }else{
+                    throw new Exception("SQL ERREUR");
+                }
+            }
+
+            if (sql1.equals("write in ")) {
+                String[] sql2=sql.split(" ");
+                String nomT1=this.nom+"/"+sql2[2];
+                File fil1=new File(nomT1+".bdd");
+                if (fil1.exists()==false) {
+                    throw new Exception("CETTE TABLE N'EXISTE PAS") ;
+                }
+
+                if (sql2[3].equals(":")) {
+                    String[] sql3=sql2[4].split(",");
+                    Table t1=prendre(nomT1);
+                    if (sql3.length!=t1.getLength()) {
+                        throw new Exception("TSY AMPY ILAY DATA");
+                        // System.out.println("TSY AMPY ILAY DATA");
+                    }else{
+                        for (int i = 0; i < sql3.length; i++) {
+                            ecrire(sql3[i],nomT1);
+                        }
+                        throw new Exception("OK");
+                    }
+                }
+            }
+
+            if (sql4.equals("get ")) {
+                String[] sql5=sql.split(" ");
+                // System.out.println(sql5[1]);
+                // System.out.println(sql5[2]);
+                // System.out.println(sql5[3]);
+
+                if (sql5.length==4) {
+
+                    if (sql5[2].equals("in")) {
+                        String nomT2=this.nom+"/"+sql5[3];
+                        File fil2=new File(nomT2+".bdd");
+                        if (fil2.exists()==false) {
+                            throw new Exception("CETTE TABLE N'EXISTE PAS") ;
+                        }
+                        Table t2=prendre(nomT2);
+                        // System.out.println("jdj");
+
+                        // get all in table
+                        if (sql5[1].equals("all")) {
+                            return t2;
+                            // t2.affichageByLine();
+                        }
+                        
+                        // get Nom in table
+                        if (sql5[1].equals("all")==false) {
+                            String[] u=new String[1];
+                            u[0]=sql5[1];
+                            Table t3=t2.projection(u);
+                            return t3;
+                            // t3.affichageByLine();
+                        }    
+                    }
+                    
+                    if (sql5[1].equals("all")==false&&sql5[2].equals("in")==false) {
+                        String nomT5=this.nom+"/"+sql5[1];
+                        String nomT6=this.nom+"/"+sql5[3];
+                        File fil3=new File(nomT5+".bdd");
+                        File fil4=new File(nomT6+".bdd");
+                        if (fil3.exists()==false||fil4.exists()==false) {
+                            throw new Exception("CETTE TABLE N'EXISTE PAS") ;
+                        }
+                        Table t6=prendre(nomT5);
+                        Table t7=prendre(nomT6);
+                        // t7.affichage();
+                            // get table union tab
+                            if (sql5[2].equals("union")) {
+                                t6=t6.union(t7);
+                                return t6;
+                                // t6.affichageByLine();
+                            }
+                            // get table divise tab
+                            if (sql5[2].equals("divise")) {
+                                t6=t6.division(t7);
+                                return t6;
+                                // t6.affichageByLine();
+                            }
+                            // get table fois tab
+                            if (sql5[2].equals("fois")) {
+                                t6=t6.produit(t7);
+                                return t6;
+                                // t6.affichageByLine();
+                            }
+                            // get table inter tab
+                            if (sql5[2].equals("inter")) {
+                                t6=t6.intersection(t7);
+                                return t6;
+                                // t6.affichageByLine();
+                            }
+                            // get table diff tab
+                            if (sql5[2].equals("diff")) {
+                                t6=t6.difference(t7);
+                                return t6;
+                                // t6.affichageByLine();
+                            }
+                    }
+                }
+
+                if (sql5[2].equals("in")&&sql5.length==8) {
+                    String nomT3=this.nom+"/"+sql5[3];
+                    File fil6=new File(nomT3+".bdd");
+                        if (fil6.exists()==false) {
+                            throw new Exception("CETTE TABLE N'EXISTE PAS") ;
+                        }
+                    Table t4=prendre(nomT3);
+
+
+                    // get all in table where Nom = Raj
+                    if (sql5[1].equals("all")) {
+                        t4=t4.selection(sql5[5], sql5[7]);
+                        return t4;
+                        // t4.affichage();
+                    }
+                    
+                    // get Nom in table where Nom = Raj
+                    else if (sql5[1].equals("all")==false) {
+                        t4=t4.selection(sql5[5], sql5[7]);
+                        String[] u=new String[1];
+                        u[0]=sql5[1];
+                        t4=t4.projection(u);
+                        return t4;
+                        // t4.affichageByLine();
+                    }
+                }
+
+                if (sql5[2].equals("in")&&sql5.length==10) {
+                    String nomT3=this.nom+"/"+sql5[3];
+                    String nomT4=this.nom+"/"+sql5[5];
+                    File fil6=new File(nomT3+".bdd");
+                    File fil7=new File(nomT4+".bdd");
+                        if (fil6.exists()==false||fil7.exists()==false) {
+                            throw new Exception("CETTE TABLE N'EXISTE PAS") ;
+                        }
+                    Table t4=prendre(nomT3);
+                    Table t5=prendre(nomT4);
+                    // System.out.println("shdhkjs");
+                    // get all in table join tab on Nom = Nom
+                    if (sql5[1].equals("all")) {
+                        t4=t4.join(t5, sql5[7], sql5[9]);
+                        return t4;
+                        // t4.affichageByLine();
+                    }
+                
+            }
+        } 
+        }else{
+            // return "ERREUR DE CONNECTION";
+            throw new Exception("ERREUR DE CONNECTION");
+        }
+    return null;
+    
+}  
+//------------------------------------------------------------------------------------------------------------------
+
+    public void deconnect(){
+        this.co=false;
+        this.nom=null;
+    }
 }
