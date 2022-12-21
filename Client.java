@@ -17,19 +17,20 @@ import tab.Table;
 
 public class Client {
     public static void main(String[] args) throws IOException {
-            System.out.println("Sending a Request..");
+            System.out.println("TSQL...");
             Socket s = new Socket("localhost",6666);
             System.out.println("Ok");
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            ObjectOutputStream di = new ObjectOutputStream(s.getOutputStream());
-            ObjectInputStream d = new ObjectInputStream(s.getInputStream());
-            String str = br.readLine();
-            String[] co=str.split("/");
-            File bdd=new File("hh");
-            if (co.length!=1) {    
-                bdd=new File(co[1]);
-            }
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                ObjectOutputStream di = new ObjectOutputStream(s.getOutputStream());
+                ObjectInputStream d = new ObjectInputStream(s.getInputStream());
+
+                    String str = br.readLine();
+                    String[] co=str.split("/");
+                    File bdd=new File("hh");
+                    if (co.length!=1) {    
+                        bdd=new File(co[1]);
+                    }
             
             while (co[0].equals("Connect to Tsql")==false||bdd.exists()==false) {
                 System.out.println("ERREUR DE CONNEXION");
@@ -39,18 +40,17 @@ public class Client {
                     bdd=new File(co[1]);
                 }
             }
+
             di.writeObject(co);
             di.flush();
             System.out.println("CONNECTED");
+            
             while (true) {
                 try {
                     System.out.print("  >> ");
                     String st = br.readLine();
                         di.writeUTF(st);
                         di.flush();
-    
-                    // System.out.println(st);
-                    
                     Object ob = d.readObject();
                     if (ob==null) {
                         System.out.println("ERREUR");
@@ -62,38 +62,11 @@ public class Client {
                         }
                     }
                     if (ob!=null&&ob.getClass().getSimpleName().equals("String")) {
-                        if (ob.equals("DISCONNECTED")) {
-                            str = br.readLine();
-                            co=str.split("/");
-                            bdd=new File("hh");
-                            if (co.length!=1) {    
-                                bdd=new File(co[1]);
-                            }
-                            
-                            while (co[0].equals("Connect to Tsql")==false||bdd.exists()==false) {
-                                System.out.println("ERREUR DE CONNEXION");
-                                str = br.readLine();
-                                co=str.split("/");
-                                if (co.length!=1) {    
-                                    bdd=new File(co[1]);
-                                }
-                            }
-
-                            di.writeObject(co);
-                            di.flush();
-                            System.out.println("CONNECTED");
-                        } else if (ob.equals("String index out of range: 9")) {
-                            // System.out.println(" ");
-                        }else{                            
-                            System.out.println(ob);
-                        }
-                    }
-                    // Thread.sleep(100);    
+                        System.out.println(ob);
+                    }  
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    System.out.println("ERREUR");
                 }
-                // System.out.println("Input the data..");
-                
             }
     }
 }

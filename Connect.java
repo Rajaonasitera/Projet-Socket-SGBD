@@ -146,7 +146,6 @@ public class Connect {
             File file=new File(nom);
             if (file.exists()==false) {
                 n=file.mkdir();
-                throw new Exception(String.valueOf(n));
             } else {
                 throw new Exception("DATABASE EXISTANT");
             }    
